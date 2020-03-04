@@ -96,17 +96,13 @@ public:
 
 	friend std::istream& operator>>(std::istream& in, vector& v)
 	{
-		int size, val;
-		//std::cout << "size: ";
+		int size;
 		in >> size;
-
-		//std::cout << "vals: ";
 
 		v.resize_fill(0, size);
 
 		for (int i = 0; i < v.size; i++){
-			in >> val;
-			v.data[i] = val;
+			in >> v.data[i];
 		}
 		return in;
 	}
@@ -151,28 +147,49 @@ public:
 		v = nullptr;
 	}
 
-	void fill(int colSize = -1)
+	void resize(int rowSize, int colSize = -1)
 	{
 		int maxSize = colSize;
-		if (colSize == -1){
-			for (int i = 0; i < dim; i++){
-				if (maxSize < v[i].size)
-					maxSize = v[i].size;
+		if (colSize == -1)
+			maxSize = maxColSize();
+
+		if (rowSize > dim) {
+			vector* newData = new vector[rowSize];
+			for (int i = 0; i < dim; i++) {
+				newData[i] = this->v[i];
 			}
+			for (int i = dim; i < rowSize; i++) {
+				for(int j = 0; j<newData[i].size; j++)
+					newData[i].data[j] = 0;
+			}
+			delete[] v;
+			v = newData;
+			dim = rowSize;
 		}
 		for (int i = 0; i < dim; i++)
 			if (v[i].size < maxSize)
 				this->resize_vec(i, maxSize);
 	}
 
-	vector_de_vectori operator+(const vector_de_vectori& m)
+	int maxColSize()
+	{
+		int maxSize = 0;
+		for (int i = 0; i < dim; i++){
+			if (maxSize < v[i].size)
+				maxSize = v[i].size;
+		}
+		return maxSize;
+	}
+
+	vector_de_vectori operator+(const vector_de_vectori& m) const
 	{
 		int col1 = this->maxColSize();
 		int col2 = m.maxColSize();
 		int maxCol = col1 > col2 ? col1 : col2;
+		int maxRow = m.dim > this->dim ? m.dim : this->dim;
 		vector_de_vectori sum = *this, t2 = m;
-		sum.fill(maxCol);
-		t2.fill(maxCol);
+		sum.resize(maxRow, maxCol);
+		t2.resize(maxRow, maxCol);
 
 		for (int i = 0; i < sum.dim; i++)
 			for (int j = 0; j < maxCol; j++)
@@ -183,7 +200,6 @@ public:
 	friend std::istream& operator>>(std::istream& is, vector_de_vectori& m) 
 	{
 		int dim;
-		std::cout << "dim: ";
 		is >> dim;
 		m.v = new vector[dim];
 		m.dim = dim;
@@ -225,12 +241,24 @@ private:
 	}
 };
 
+template <typename T>
+void readNprint(int n, std::istream& in, std::ostream& out = std::cout)
+{
+	for (int i = 0; i < n; i++) {
+		T obj;
+		in >> obj;
+		out << obj;
+	}
+}
+
 int main()
 {
 	std::ifstream fin("date.txt");
 	vector_de_vectori v1, v2;
-	fin >> v1;
-	std::cout << v1;
+	fin >> v1 >> v2;
+	std::cout << v1 << v2;
+	auto v3 = v1 + v2;
+	std::cout << v3;
 	return 0;
 }
 
