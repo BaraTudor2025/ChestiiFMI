@@ -1,5 +1,5 @@
 // bct141_tema1.cpp : Defines the entry point for the console application.
-//
+// exercitiu 6
 //#include "stdafx.h"
 
 #include <iostream>
