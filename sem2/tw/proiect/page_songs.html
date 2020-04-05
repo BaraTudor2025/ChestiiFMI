@@ -17,7 +17,6 @@
 
 <body>
 
-
 <header>
     <nav>
         <ul class="main-menu">
@@ -26,8 +25,8 @@
             <li class="sub-main-menu">
                 <a>Profil</a>
                 <ul>
-                    <li><a href="page_songs.html">My songs</a></li>
-                    <li><a href="#">Compose</a></li>
+                    <li><a href="#">My songs</a></li>
+                    <li><a href="page_compose.html">Compose</a></li>
                 </ul>
             </li>
             <li><a href="page_login.html">Login</a></li>
@@ -37,39 +36,45 @@
 </header>
 
 
-<main id="compose">
+<main id="songs-display">
 
-    <section id="note-list">
-        <p>Notes:</p>
-        <button type="button">A</button>
-        <button type="button">B</button>
-        <button type="button">C</button>
-        <button type="button">D</button>
-        <button type="button">E</button>
-        <button type="button">F</button>
-        <button type="button">G</button>
-    </section>
-    <br/>
-
-    <section id="modifiers">
-        <p>Modifiers:</p>
-        <button type="button">Bemol</button>
-        <button type="button">Sharp</button>
-    </section>
-    <br/>
-
-    <section id="note-string">
-        <h3>Song:</h3>
-        <p>C D Eb F G Ab Bb</p>
+    <section id="info">
+        <h4>Numar de cantece: 3</h4><br/><br/>
     </section>
 
-    <section id="options">
-        <button type="button">Play</button>
-        <br/><br/>
-        <label for="song-name">Name</label>
-        <input type="text" id="song-name" name="song-name"><br/>
-        <button type="">Save</button>
-    </section>
+    <h4>Cantece:</h4> <br/>
+    <ul id="song-list">
+
+        <li class="song-item">
+            <h4 class="song-name">un nume de cantec woooooooooo</h4>
+            <div class="notes-display">
+                <p> a b e f c# g d</p>
+            </div>
+            <button type="button" class="play-button">play</button>
+            <button type="button" class="song-edit">edit</button>
+        </li>
+        <br/>
+
+        <li class="song-item">
+            <h4 class="song-name">un nume de cantec woooooooooo</h4>
+            <div class="notes-display">
+                <p> a b e f c# g d</p>
+            </div>
+            <button type="button" class="play-button">play</button>
+            <button type="button" class="song-edit">edit</button>
+        </li>
+        <br/>
+
+        <li class="song-item">
+            <h4 class="song-name">un nume de cantec woooooooooo</h4>
+            <div class="notes-display">
+                <p> a b e f c# g d</p>
+            </div>
+            <button type="button" class="play-button">play</button>
+            <button type="button" class="song-edit">edit</button>
+        </li>
+        <br/>
+    </ul>
 </main>
 
 </body>

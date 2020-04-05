@@ -24,7 +24,6 @@ int pop()
 		delete head;
 		return info;
 	}
-	std::abort();
 	return -1;
 }
 
@@ -51,14 +50,16 @@ void clear()
 
 int main()
 {
-	// test
-	//push(1);
-	//pop();
-	//push(2);
-	//push(3);
-	//print();
 
-	//std::ifstream fin("date_sitva.txt");
+	std::cout << "\npb 2.1\n";
+	push(1);
+	pop();
+	push(2);
+	push(3);
+	print();
+	clear();
+
+	std::cout << "\npb 2.3\n";
 	std::stringstream fin(R"(
 	3
 	8
@@ -86,5 +87,4 @@ int main()
 			std::cout << "invalid\n";
 		clear();
 	}
-
 }

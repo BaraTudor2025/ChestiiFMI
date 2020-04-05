@@ -10,24 +10,26 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
     <!- -->
-    <link rel="stylesheet" href="assets/css/navbar.css" type="text/css">
-    <link rel="stylesheet" href="assets/css/general.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="assets/css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/general.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/galerie.css">
     <title>Compune-mă</title>
 </head>
 
-<body>
+<script src="http://www.w3schools.com/lib/w3data.js"></script>
 
+<body>
 
 <header>
     <nav>
         <ul class="main-menu">
             <li class="title">Compune-mă</li>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="#">Home</a></li>
             <li class="sub-main-menu">
                 <a>Profil</a>
                 <ul>
                     <li><a href="page_songs.html">My songs</a></li>
-                    <li><a href="#">Compose</a></li>
+                    <li><a href="page_compose.html">Compose</a></li>
                 </ul>
             </li>
             <li><a href="page_login.html">Login</a></li>
@@ -36,41 +38,31 @@
     </nav>
 </header>
 
-
-<main id="compose">
-
-    <section id="note-list">
-        <p>Notes:</p>
-        <button type="button">A</button>
-        <button type="button">B</button>
-        <button type="button">C</button>
-        <button type="button">D</button>
-        <button type="button">E</button>
-        <button type="button">F</button>
-        <button type="button">G</button>
-    </section>
-    <br/>
-
-    <section id="modifiers">
-        <p>Modifiers:</p>
-        <button type="button">Bemol</button>
-        <button type="button">Sharp</button>
-    </section>
-    <br/>
-
-    <section id="note-string">
-        <h3>Song:</h3>
-        <p>C D Eb F G Ab Bb</p>
+<main>
+    <section>
+    <aside>Un site in care <s class="taiat">poti</s> vei putea compune melodii</aside>
+        <!-- TODO: tabel de note + sir de note din cantec, lista de songs/cantece, -->
     </section>
 
-    <section id="options">
-        <button type="button">Play</button>
-        <br/><br/>
-        <label for="song-name">Name</label>
-        <input type="text" id="song-name" name="song-name"><br/>
-        <button type="">Save</button>
-    </section>
+    <!--
+    <div w3-include-html="page_login.html"></div>
+    -->
+
+    <!--
+    <div id="galerie_exemplu" class="galerie">
+        <div>
+            <figure>
+                <img src="./assets/images/one_note.png"/>
+                    <figcaption>Nota</figcaption>
+            </figure>
+            <figure><img src="./assets/images/two_notes.jpg"/></figure>
+        </div>
+    </div>
+    -->
+
 </main>
+
+<script>w3IncludeHTML();</script>
 
 </body>
 
