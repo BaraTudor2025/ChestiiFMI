@@ -159,25 +159,10 @@ public:
 		}
 		return false;
 	}
-
-	/*
-	friend std::istream& operator>>(std::istream& is, PolinomIreductibil& m)
-	{
-		Polinom* p = &m;
-		is >> *p;
-		return is;
-	}
-	*/
-
-	friend std::ostream& operator<<(std::ostream& out, const PolinomIreductibil& m)
-	{
-		m.print(out);
-		return out;
-	}
 };
 
 template <typename T>
-void read_print(int n, std::istream& in=std::cin, std::ostream& out=std::cout)
+void read_print(int n, std::istream& in = std::cin, std::ostream& out = std::cout)
 {
 	for (int i = 0; i < n; i++) {
 		T p;
