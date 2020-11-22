@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30002.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OOP3", "OOP3\OOP3.vcxproj", "{CEBCFAE8-80EC-4402-87EF-8599F19BB904}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Grafuri", "Grafuri\Grafuri.vcxproj", "{3F74484F-096B-47EF-B2B3-C8564E3FBFEF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{CEBCFAE8-80EC-4402-87EF-8599F19BB904}.Release|x64.Build.0 = Release|x64
 		{CEBCFAE8-80EC-4402-87EF-8599F19BB904}.Release|x86.ActiveCfg = Release|Win32
 		{CEBCFAE8-80EC-4402-87EF-8599F19BB904}.Release|x86.Build.0 = Release|Win32
+		{3F74484F-096B-47EF-B2B3-C8564E3FBFEF}.Debug|x64.ActiveCfg = Debug|x64
+		{3F74484F-096B-47EF-B2B3-C8564E3FBFEF}.Debug|x64.Build.0 = Debug|x64
+		{3F74484F-096B-47EF-B2B3-C8564E3FBFEF}.Debug|x86.ActiveCfg = Debug|Win32
+		{3F74484F-096B-47EF-B2B3-C8564E3FBFEF}.Debug|x86.Build.0 = Debug|Win32
+		{3F74484F-096B-47EF-B2B3-C8564E3FBFEF}.Release|x64.ActiveCfg = Release|x64
+		{3F74484F-096B-47EF-B2B3-C8564E3FBFEF}.Release|x64.Build.0 = Release|x64
+		{3F74484F-096B-47EF-B2B3-C8564E3FBFEF}.Release|x86.ActiveCfg = Release|Win32
+		{3F74484F-096B-47EF-B2B3-C8564E3FBFEF}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

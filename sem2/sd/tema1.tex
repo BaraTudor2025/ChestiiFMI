@@ -1,0 +1,80 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[latin1]{inputenc}
+
+\title{Tema 1}
+\author{Bara C Tudor gr141}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{prob 1}
+Din moment ce arborele nu este balansat, timpul de rulate al insertiei este $\Omega(log(k))$ si $\O(k)$ unde k este numarul nodurilor. Atunci pentru contructia arborelui avem timpul $\Omega(\sum_{k=1}^n log(k))$ care este egal cu 
+$\Omega(\sum_{k=1}^n log(n)) = \Omega(nlogn)$.
+
+\section*{prob 2}
+Datorita proprietatii de transitivitate \Rightarrow $f(n)= \Theta(h(n))$
+
+\section*{prob 3}
+\begin{math}
+\text{Pentru} \log n = o(\sqrt n) \text{ avem } 
+\forall c > 0, \exists n_0>0, 0 \leq \log n < c\sqrt n, \forall n \geq n_0 .
+\\
+\text{Construim functia} f(n)=c\sqrt n - \log n, \text{ demonstram ca } f(n) > 0 .
+\\
+f'(n)=\frac{c}{2\sqrt n}-\frac{1}{n} \\
+f'(n)=0 \Rightarrow n=\frac{4}{c^2} \\
+f(\frac{4}{c^2})=2-2\log 2 + 2\log c \\
+\end{math}
+Din tabelul lui Rolle (pe care nu stiu cum sa l fac in latex) rezulta ca semnul funcite f nu se schimba pe intervalul $[1,\infty)$, semnul fiind pozitiv. Deci relaita de la inceput este adevarata
+
+\section*{prob 4}
+Din moment ce elementele sunt de la 1 la n, le putem folosi ca indexi in vector.
+Negam fiecare v[abs(v[i])], astfel il marcam.
+Daca v[abs(v[i])] este negativ cand vrem sa il marcam, inseamna ca l am marcat deja, deci elementul v[i] se repeta.
+
+\begin{verbatim}
+for elem in vector
+    if vector[abs(elem)] > 0
+        neaga vector[abs(elem)]
+    else
+        am gasit elementul: abs(elem)
+\end{verbatim}
+
+\section*{prob 5}
+Algoritmul are O(log n) deoarece spatiul de cautare se injumatateste la fiecare pas(un fel de cautare binara). Am sa folosiesc varibile lower-bound si upper-bound pentru delimitarea spatiului de cautare. \\
+Algoritmul presupune ca v1 are mediana mai mica ca mediana din v2.\\
+Mediana din v1 se va numi mediana min, iar cea din v2 mediana max.\\
+Cautarea incepe in dreapta medianei min, si in stanga medianei max.
+\begin{verbatim}
+Exemplu:
+v1: 1 2 5 |10| 11 15 20
+v2: 3 4 12 |23| 24 25 26
+v sortat: 1 2 3 4 5 10 |11| 12 15 20 23 24 25 26
+11 este mediana comuna
+
+Cautam mediana comuna in subvectorii: 10 - 20 si 3 - 23
+
+Pseudo Cod:
+lb1 = pozitie mediana min
+ub1 = n
+lb2 = 1
+ub2 = pozitie mediana max
+while lb1+1 != ub1 sau lb2+1 != ub2
+    i = (lb1 + ub1) / 2
+    j = (lb2 + ub2) / 2
+    else if v1[i] < v2[j]
+        lb1 = i, ub2 = j
+    else
+        ub1 = i, lb2 = j
+if v1[ub1] < v2[ub2]
+  v1[ub1] este mediana comuna
+else
+  v1[lb1] este mediana comuna
+
+\end{verbatim}
+
+\end{document}

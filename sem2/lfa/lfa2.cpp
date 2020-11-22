@@ -17,7 +17,7 @@ public:
 	AutomatFD(int nrs) : states(nrs) { }
 
 	bool isValid(std::string_view s) const {
-		auto state = getState(states[0], s);
+		auto state = getState(s);
 		return state ? state->isFinale : false;
 	}
 
@@ -60,11 +60,11 @@ private:
 
 	std::vector<State> states;
 
-	const State* getState(const State& firstState, std::string_view str) const
+	const State* getState(std::string_view str) const
 	{
-		const State* state = &firstState;
-		for (; str.size() > 0; str.remove_prefix(1)) {
-			auto it = state->transitions.find(str.front());
+		const State* state = &states[0];
+		for (char inputChar : str) {
+			auto it = state->transitions.find(inputChar);
 			if (it == state->transitions.end())
 				return nullptr;
 			int nextState = it->second;
@@ -120,15 +120,17 @@ public:
 	void run(std::string_view str) const
 	{
 		auto [valid, statesQ] = isValid(str);
+		std::cout << str << ':' << valid;
+		std::cout << '\n';
 
-		const char* prefix = valid ? "  " : "in";
-		std::printf("%svalid: %s\n", prefix, str.data());
+		//const char* prefix = valid ? "  " : "in";
+		//std::printf("%svalid: %s\n", prefix, str.data());
 
-		std::cout << "states:";
-		for (auto state : statesQ) {
-			std::cout << state->name << " ";
-		}
-		std::cout << "\n\n";
+		//std::cout << "states:";
+		//for (auto state : statesQ) {
+		//	std::cout << state->name << " ";
+		//}
+		//std::cout << "\n\n";
 	}
 
 	friend AutomatFN makeAFNfromGrammar(std::istream&);
@@ -147,17 +149,16 @@ private:
 	{
 		std::set<const State*> statesQ = {&firstState};
 		std::set<const State*> nextStatesQ;
-		for (; str.size() > 0; str.remove_prefix(1)) {
+		for(char inputChar : str) {
 			for (const State* state : statesQ) {
-				auto it = state->transitions.find(str.front());
+				auto it = state->transitions.find(inputChar);
 				if (it != state->transitions.end()) {
 					for (int nextState : it->second) {
 						nextStatesQ.insert(&states[nextState]);
 					}
 				}
 			}
-			nextStatesQ.swap(statesQ);
-			nextStatesQ.clear();
+			statesQ = std::move(nextStatesQ);
 		}
 		return statesQ;
 	}
@@ -207,18 +208,28 @@ AutomatFN makeAFNfromGrammar(std::istream& in)
 	while (in) {
 		std::string str;
 		getline(in, str);
-		char state, elem, nextState;
+		char state, inputElem, nextState;
 		if (str.size() > 1) {
-			sscanf(str.c_str(), "%c %c%c", &state, &elem, &nextState);
-			printf("1:%c 2:%c 3:%c\n", state, elem, nextState);
+			int charCitite = sscanf(str.c_str(), "%c %c%c", &state, &inputElem, &nextState);
+			//printf("1:%c 2:%c 3:%c\n", state, elem, nextState);
 			auto& s = automata.states[getIndex(state)];
-			if (elem == '0') {
-				s.isFinale = true;
-				s.name = getIndex(state);
+
+			if (charCitite == 2) {
+				if (inputElem == '0') {
+					s.isFinale = true;
+					s.name = getIndex(state);
+				}
+				else {
+					auto& fs = automata.states[getIndex('F')];
+					fs.name = getIndex('F');
+					fs.isFinale = true;
+					s.transitions[inputElem].push_back(getIndex('F'));
+					s.name = getIndex(state);
+				}
 				continue;
 			}
 			s.name = getIndex(state);
-			s.transitions[elem].push_back(getIndex(nextState));
+			s.transitions[inputElem].push_back(getIndex(nextState));
 		}
 	}
 	return automata;
@@ -234,8 +245,42 @@ S bA
 A 0
 A cA
 )");
-	AutomatFN automat = makeAFNfromGrammar(ss);
-	runAutomata(automat, {"ab", "aaaaaaabcccccccc", "b", "bcc", "ac", "abbc"});
+
+	/*
+A 0
+A cA
+
+S aS | bA
+A cA
+A 0
+	*/
+	
+	stringstream ssPrez(R"(
+6
+S aA
+S bB
+S 0
+A aS
+B bC
+C bD
+C b
+D bB
+)");
+	AutomatFN automat = makeAFNfromGrammar(ssPrez);
+	runAutomata(automat, { "aaaabbbbbb", "aaabb", "bbbaa"});
+
+	cout << "\n\n automat nedet:\n";
+	AutomatFN afn = AutomatFN::make(R"(
+7
+0 0 2 a 1 a 2
+1 0 1 c 1
+2 0 3 c 3 c 4 d 4
+3 1 2 a 3 d 2
+4 0 1 b 5
+5 0 2 b 4 a 6
+6 1 b 4
+)");
+	runAutomata(afn, { "acdcbbba", "ac", "abaa" });
 	return 0;
 }
 
@@ -289,6 +334,7 @@ int main2()
 	7 1 1 d 7
 	)");
 	runAutomata(afn, {"acacd", "acacaddd", "acad", "ab", "acd", "acdd"});
+
 
 	return 0;
 }
