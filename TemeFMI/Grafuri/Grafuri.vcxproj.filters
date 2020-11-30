@@ -35,6 +35,9 @@
     <None Include="GrafPonderat.in">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="GrafDijkstra.in">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Graf.hpp">

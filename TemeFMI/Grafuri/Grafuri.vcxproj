@@ -151,6 +151,7 @@
     <None Include="CompTareConexe.in" />
     <None Include="Graf1.in" />
     <None Include="GrafCiclic.in" />
+    <None Include="GrafDijkstra.in" />
     <None Include="GrafPonderat.in" />
   </ItemGroup>
   <ItemGroup>

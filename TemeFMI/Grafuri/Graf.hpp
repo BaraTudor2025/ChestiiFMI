@@ -40,6 +40,7 @@ public:
 	const bool one_index;
 	const int start_index;
 	const GrafType type;
+	//const bool orientat;
 
 	//int actual_nr_noduri() const;
 	int actual_nr_noduri() const { return nr_noduri - start_index; }
@@ -47,6 +48,8 @@ public:
 	virtual void connect(int n1, int n2) = 0;
 	virtual bool is_connected(int n1, int n2) const = 0;
 	virtual void for_neighbours(int n, std::function<void(int)> f) const = 0;
+	//virtual void add_node(int n) = 0;
+	//virtual void hint_nr_edges(int n) = 0;
 
 	void for_nodes(std::function<void(int)> f) const
 	{

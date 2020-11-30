@@ -238,6 +238,7 @@ auto prim(IGrafPonderat* g) -> std::unique_ptr<IGrafPonderat>
 {
 	auto parent = std::vector<int>(g->nr_noduri, 0);
 	auto viz = std::vector<bool>(g->nr_noduri, false);
+	//auto viz = std::vector<int>(g->nr_noduri, false);
 
 	auto apcm = makeGrafPonderat(g->actual_nr_noduri(), g->nr_noduri - 1, g->one_index, GrafType::ListVector);
 	auto minPond = std::vector<int>(g->nr_noduri, std::numeric_limits<int>::max());
@@ -251,12 +252,16 @@ auto prim(IGrafPonderat* g) -> std::unique_ptr<IGrafPonderat>
         std::pop_heap(q.begin(), q.end(), comp);
         q.pop_back();
 		viz[a] = true;
+		//viz[a]++;
 		g->for_neighbours(a, [&](int b, int p) {
 			if(!viz[b] && p < minPond[b]) {
+				// if minPond[a] + p < minPond[b]
+				// minPond[b] = minPond[a] + p;
 				minPond[b] = p;
 				parent[b] = a;
 				q.push_back(b);
 				std::push_heap(q.begin(), q.end(), comp);
+				//std::make_heap(q.begin(), q.end(), comp);
 			}
 		});
 	}
@@ -265,6 +270,45 @@ auto prim(IGrafPonderat* g) -> std::unique_ptr<IGrafPonderat>
 			apcm->connect(a, parent[a], g->pondere(a, parent[a]));
 	});
 	return apcm;
+}
+
+struct DijkstraResult {
+	std::vector<int> parent;
+	std::vector<int> pondere;
+};
+
+auto dijkstra(IGrafPonderat* g, int start) -> DijkstraResult
+{
+	auto parent = std::vector<int>(g->nr_noduri, 0);
+	auto viz = std::vector<int>(g->nr_noduri, 0);
+
+	auto minPond = std::vector<int>(g->nr_noduri, std::numeric_limits<int>::max());
+	minPond[start] = 0;
+	auto comp = [&](int a, int b) {
+		return minPond[a] > minPond[b];
+	};
+	auto q = std::vector<int>{g->start_index};
+	while (!q.empty()) {
+		int a = q.front();
+        std::pop_heap(q.begin(), q.end(), comp);
+        q.pop_back();
+		viz[a]++;
+		if (viz[a] == 1) {
+			g->for_neighbours(a, [&](int b, int p) {
+				// q normal pentru bellman-ford
+				//if(min[a] != max && minPond[a] + p < minPond[b])
+				if (!viz[b] && minPond[a] + p < minPond[b]) {
+					minPond[b] = minPond[a] + p;
+					parent[b] = a;
+					//if(!viz/in_q[b]) q.push viz[b] = true;
+					q.push_back(b);
+					std::push_heap(q.begin(), q.end(), comp);
+					//apar[b]++; if(apartitii[b] > n) return b;
+				}
+			});
+		}
+	}
+	return { std::move(parent), std::move(minPond) };
 }
 
 /*
@@ -316,15 +360,21 @@ int main()
 	conf.one_index = true;
 	conf.orientat = false;
 	conf.type = GrafType::ListVector;
-	auto graf = readGrafPonderat("GrafPonderat.in", conf);
+	auto graf = readGrafPonderat("GrafDijkstra.in", conf);
 	print_for_site(graf.get());
-	auto apcm = prim(graf.get()); // arbore partial de cost minim
-	print_for_site(apcm.get());
-	//std::cout << numarComponenteConexe(graf.get()) << '\n';
-	//tarjan(graf.get());
 	std::cout << '\n';
-	//muchiiCritice(graf.get());
-	//kosaraju(kgraf.get());
+	auto res = dijkstra(graf.get(), 1);
+	for (int i = 0; i < graf->nr_noduri; i++) {
+		std::cout << i << ' ';
+	}
+	std::cout << '\n';
+	for (auto e : res.parent)
+		std::cout << e << ' ';
+	std::cout << '\n';
+	std::cout << res.pondere[3] << ' ' << res.pondere[5];
+	//auto apcm = prim(graf.get()); // arbore partial de cost minim
+	//print_for_site(apcm.get());
+	std::cout << '\n';
 }
 
 
